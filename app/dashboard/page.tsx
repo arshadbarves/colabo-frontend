@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { Logo } from "../components/utils/Logo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { HomeLink } from "../components/auth/common/ui/TLink";
 
 const Dashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -10,77 +14,47 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="grid min-h-screen bg-gray-100 lg:grid-cols-[280px_1fr] dark:bg-gray-800/40">
-      <div className="hidden border-r border-gray-200 bg-gray-100/40 lg:block dark:border-gray-800 dark:bg-gray-950">
+    <div className="grid min-h-screen bg-gray-50 lg:grid-cols-[250px_1fr] dark:bg-gray-800/40">
+      <div className="hidden border-r border-gray-200 bg-gray-100/40 lg:block dark:border-gray-800 dark:bg-gray-800/40">
         <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-[60px] items-center border-b px-6">
-            <a className="flex items-center gap-2 font-semibold" href="#">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-6 w-6"
-              >
-                <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"></path>
-                <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"></path>
-                <path d="M12 3v6"></path>
-              </svg>
-              <span className="">Acme Inc</span>
+          <div
+            className="flex h-[60px] items-center border-b border-gray-200 px-4 dark:border-gray-800
+            dark:bg-gray-800 justify-center"
+          >
+            <a className="flex items-center" href="#">
+              <Logo size="text-2xl" />
+              <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 -translate-y-1">
+                beta
+              </span>
             </a>
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground ml-auto h-8 w-8">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4"
-              >
-                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-              </svg>
-              <span className="sr-only">Toggle notifications</span>
-            </button>
           </div>
           <div className="flex-1 overflow-auto py-2">
-            <nav className="grid items-start px-4 text-sm font-medium">
-              <a
-                className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-                href="#"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                Home
-              </a>
-              {/* Add other navigation links here */}
+            <nav className="grid items-start px-4 text-sm font-medium gap-2">
+              <HomeLink
+                href="/"
+                text="Home"
+                icon={<FontAwesomeIcon icon={faMoon} />}
+              />
+              <HomeLink
+                href="/about"
+                text="About"
+                icon={<FontAwesomeIcon icon={faSun} />}
+              />
+              <HomeLink
+                href="/contact"
+                text="Contact"
+                icon={<FontAwesomeIcon icon={faSun} />}
+              />
+              <HomeLink
+                href="/dashboard"
+                text="Dashboard"
+                icon={<FontAwesomeIcon icon={faSun} />}
+              />
             </nav>
           </div>
           <div className="mt-auto p-4">
             <div
-              className="rounded-lg border bg-card text-card-foreground shadow-sm"
+              className="rounded-lg border dark:border-gray-800 bg-card text-card-foreground shadow-sm"
               data-v0-t="card"
             >
               <div className="flex flex-col space-y-1.5 p-6 pb-4">
@@ -93,7 +67,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div className="p-6">
-                <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full">
+                <button className="group relative w-full flex justify-center border text-sm font-medium rounded-xl text-base px-4 py-2 bg-primary hover:bg-primary-600 text-white">
                   Upgrade
                 </button>
               </div>
@@ -125,31 +99,23 @@ const Dashboard = () => {
           <div className="w-full flex-1">
             <form>
               <div className="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </svg>
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground dark:text-gray-500 pointer-events-none z-10"
+                />
                 <input
-                  className="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-950"
-                  placeholder="Search products..."
+                  className="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-800 dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500 md:pl-10"
+                  name="search"
+                  id="search"
+                  aria-label="Search for anything... "
+                  placeholder="Search for anything..."
                   type="search"
                 />
               </div>
             </form>
           </div>
           <button
-            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
+            className="group relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800/40 hover:bg-gray-200 dark:hover:bg-gray-700 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             type="button"
             id="radix-:r2q:"
             aria-haspopup="menu"
@@ -157,7 +123,7 @@ const Dashboard = () => {
             data-state="closed"
           >
             <img
-              src="/placeholder.svg"
+              src="https://avatar.iran.liara.run/public"
               width="32"
               height="32"
               className="rounded-full"

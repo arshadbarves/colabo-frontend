@@ -5,8 +5,6 @@ import { SocialSignInOptions } from "@/app/components/auth/SocialSignInOptions";
 import { TLink } from "@/app/components/auth/common/ui/TLink";
 import { TButton } from "@/app/components/auth/common/ui/TButton";
 import { Logo } from "@/app/components/utils/Logo";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const LoginPage = () => {
   return (
