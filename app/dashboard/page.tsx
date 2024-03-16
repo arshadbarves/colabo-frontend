@@ -3,7 +3,14 @@
 import React, { useState } from "react";
 import { Logo } from "../components/utils/Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faSun, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMoon,
+  faSun,
+  faSearch,
+  faChevronRight,
+  faClock,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { HomeLink } from "../components/auth/common/ui/TLink";
 
 const Dashboard = () => {
@@ -11,7 +18,120 @@ const Dashboard = () => {
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
+    console.log("toggleDarkMode", isDarkMode);
   };
+
+  const [projects, setProjects] = useState([
+    {
+      id: 1,
+      name: "Design new UI components",
+      description: "Design new UI components for the new website",
+      createdAt: "10th March, 2024",
+      status: "Completed",
+      collaborators: [
+        {
+          name: "John Doe",
+          image: "https://avatar.iran.liara.run/public",
+        },
+        {
+          name: "Jane Doe",
+          image: "https://avatar.iran.liara.run/public",
+        },
+        {
+          name: "Ricky Doe",
+          image: "https://avatar.iran.liara.run/public",
+        },
+        {
+          name: "Micky Doe",
+          image: "https://avatar.iran.liara.run/public",
+        },
+      ],
+      tasks: [
+        { id: 1, name: "Create new button" },
+        { id: 2, name: "Design new modal" },
+        { id: 3, name: "Create new form" },
+        { id: 4, name: "Create new table" },
+      ],
+    },
+    {
+      id: 2,
+      name: "Acme Website Redesign",
+      description: "Redesign the Acme website to make it more user-friendly",
+      createdAt: "20th March, 2024",
+      status: "In Progress",
+      collaborators: [
+        {
+          name: "John Doe",
+          image: "https://avatar.iran.liara.run/public",
+          role: "admin",
+        },
+        {
+          name: "Jane Doe",
+          image: "https://avatar.iran.liara.run/public",
+          role: "developer",
+        },
+        {
+          name: "Ricky Doe",
+          image: "https://avatar.iran.liara.run/public",
+          role: "designer",
+        },
+      ],
+      tasks: [
+        { id: 1, name: "Create new button" },
+        { id: 2, name: "Design new modal" },
+        { id: 3, name: "Create new form" },
+        { id: 4, name: "Create new table" },
+        { id: 5, name: "Create new table" },
+      ],
+    },
+  ]);
+
+  const handleProjectCreate = () => {
+    setProjects([
+      ...projects,
+      {
+        id: projects.length + 1,
+        name: "New Project",
+        description: "New Project Description",
+        createdAt: "10th March, 2024",
+        status: "New",
+        collaborators: [
+          {
+            name: "John Doe",
+            image: "https://avatar.iran.liara.run/public",
+            role: "admin",
+          },
+        ],
+        tasks: [],
+      },
+    ]);
+  };
+
+  const handleProjectSelect = (id: number) => {
+    console.log("Project Selected", id);
+  };
+
+  const handleProjectDelete = (id: number) => {
+    setProjects(projects.filter((project) => project.id !== id));
+  };
+
+  const handleProjectUpdate = (id: number, name: string) => {
+    setProjects(
+      projects.map((project) =>
+        project.id === id ? { ...project, name } : project
+      )
+    );
+  };
+
+  const handleProjectClick = (id: number) => {
+    console.log("Project Clicked", id);
+  };
+
+  function handleSelectAll(e: React.ChangeEvent<HTMLInputElement>) {
+    const checked = e.target.checked;
+
+    console.log("handleSelectAll", checked);
+  }
 
   return (
     <div className="grid min-h-screen bg-gray-50 lg:grid-cols-[250px_1fr] dark:bg-gray-800/40">
@@ -54,21 +174,12 @@ const Dashboard = () => {
           </div>
           <div className="mt-auto p-4">
             <div
-              className="rounded-lg border dark:border-gray-800 bg-card text-card-foreground shadow-sm"
+              className="rounded-lg border dark:border-gray-800 bg-card text-card-foreground shadow-sm dark:bg-gray-800/40 dark:text-gray-300 dark:hover:bg-gray-800/50 transition-colors"
               data-v0-t="card"
             >
-              <div className="flex flex-col space-y-1.5 p-6 pb-4">
-                <h3 className="text-2xl font-semibold whitespace-nowrap leading-none tracking-tight">
-                  Upgrade to Pro
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Unlock all features and get unlimited access to our support
-                  team
-                </p>
-              </div>
               <div className="p-6">
                 <button className="group relative w-full flex justify-center border text-sm font-medium rounded-xl text-base px-4 py-2 bg-primary hover:bg-primary-600 text-white">
-                  Upgrade
+                  Logout
                 </button>
               </div>
             </div>
@@ -76,7 +187,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40 dark:border-gray-800">
           <a className="lg:hidden" href="#">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -104,11 +215,11 @@ const Dashboard = () => {
                   className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground dark:text-gray-500 pointer-events-none z-10"
                 />
                 <input
-                  className="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-800 dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500 md:pl-10"
+                  className="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-your-color focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-800 dark:border-gray-800 dark:text-gray-300 dark:placeholder-gray-500 md:pl-10 dark:focus-visible:ring-gray-900 dark:focus-visible:ring-offset-gray-700"
                   name="search"
                   id="search"
-                  aria-label="Search for anything... "
-                  placeholder="Search for anything..."
+                  placeholder="Press enter or click '/' to search"
+                  autoComplete="off"
                   type="search"
                 />
               </div>
@@ -134,79 +245,76 @@ const Dashboard = () => {
           </button>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div
-              className="rounded-lg border bg-card text-card-foreground shadow-sm"
-              data-v0-t="card"
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">
+              <span className="text-muted-foreground dark:text-gray-500"></span>
+            </h1>
+            <button
+              onClick={handleProjectCreate}
+              className="flex items-center space-x-2 text-sm font-md text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition-colors bg-gray-100 hover:bg-gray-200 dark:bg-gray-800/40 dark:hover:bg-gray-700/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg px-4 py-2"
             >
-              <div className="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
-                <h3 className="whitespace-nowrap tracking-tight text-sm font-medium">
-                  Tasks
-                </h3>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
-              </div>
-              <div className="p-6">
-                <div className="flex flex-col gap-1">
-                  <p className="font-semibold">Design new UI components</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Start: 10th March, 2024
-                  </p>
-                </div>
-                <div className="h-2 mt-2"></div>
-              </div>
-            </div>
-            <div
-              className="rounded-lg border bg-card text-card-foreground shadow-sm"
-              data-v0-t="card"
-            >
-              <div className="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
-                <h3 className="whitespace-nowrap tracking-tight text-sm font-medium">
-                  Projects
-                </h3>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                >
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
-              </div>
-              <div className="p-6">
-                <div className="flex flex-col gap-1">
-                  <p className="font-semibold">Acme Website Redesign</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Start: 10th March, 2024
-                  </p>
-                </div>
-                <div className="h-2 mt-2"></div>
-              </div>
-            </div>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="text-muted-foreground dark:text-gray-500"
+              />
+              <span>Create New Project</span>
+            </button>
           </div>
-          {/* Add other components and content here */}
+
+          <div className="grid gap-4 md:grid-cols-5">
+            {projects.map((project) => (
+              <div
+                className="rounded-lg border bg-card text-card-foreground shadow-sm dark:border-gray-800 dark:bg-gray-800/40 dark:text-gray-300 dark:hover:bg-gray-800/50 transition-colors"
+                data-v0-t="card"
+              >
+                <div className="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
+                  <h3 className="text-lg font-semibold leading-none tracking-tight">
+                    {project.name}
+                  </h3>
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    className="text-muted-foreground dark:text-gray-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex flex-col gap-2">
+                    <p className="text-sm text-muted-foreground dark:text-gray-400">
+                      {project.description}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 flex items-center gap-1">
+                      <FontAwesomeIcon
+                        icon={faClock}
+                        className="text-muted-foreground dark:text-gray-500"
+                      />
+                      {project.createdAt}
+                    </p>
+                  </div>
+                  <div className="h-2 mt-2"></div>
+                  <div className="flex items-center space-x-2 mt-2">
+                    {project.collaborators.slice(0, 2).map((avatar, index) => (
+                      <img
+                        key={index}
+                        src={avatar.image}
+                        alt="Collaborator Avatar"
+                        className="w-8 h-8 rounded-full object-cover dark:bg-gray-600"
+                        style={{
+                          zIndex: project.collaborators.length - index,
+                        }}
+                      />
+                    ))}
+                    {project.collaborators.length > 2 && (
+                      <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold text-sm">
+                        +{project.collaborators.length - 2}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </main>
       </div>
     </div>
   );
 };
-
 export default Dashboard;
