@@ -89,7 +89,7 @@ const LoginPage = () => {
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-700"
                 >
-                  Don't forget me
+                  Remember me
                 </label>
               </div>
               <div className="text-sm">
@@ -108,7 +108,8 @@ const LoginPage = () => {
 
             <div className="flex items-center justify-center">
               <p className="text-center text-sm text-gray-700">
-                Don't have an account? <TLink text="Sign up" href="signup" />
+                Don&apos;t have an account?{" "}
+                <TLink text="Sign up" href="signup" />
               </p>
             </div>
           </form>

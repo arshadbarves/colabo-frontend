@@ -16,6 +16,7 @@ import { signOut } from "@/app/services/api/auth";
 import { AuthGuard } from "@/app/components/auth/AuthGuard";
 import { HomeLink } from "@/app/components/common/ui/TLink";
 import { Logo } from "@/app/components/utils/Logo";
+import Image from "next/image";
 
 const user = {
   name: "Tom Cook",
@@ -205,7 +206,7 @@ const Dashboard = () => {
                 <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white border border-gray-800 dark:bg-gray-800 dark:border-gray-300">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <img
+                  <Image
                     className="h-8 w-8 rounded-full"
                     src={user.imageUrl}
                     alt=""
@@ -304,7 +305,7 @@ const Dashboard = () => {
                       {project.collaborators
                         .slice(0, 2)
                         .map((avatar, index) => (
-                          <img
+                          <Image
                             key={index}
                             src="https://avatar.iran.liara.run/public"
                             alt="Collaborator Avatar"
