@@ -1,5 +1,6 @@
 import axios from "axios";
 import cookie from "cookie";
+import { deleteToken } from "../services/api/auth";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8000", // Adjust baseURL as needed
@@ -27,5 +28,19 @@ const getToken = () => {
   const cookies = cookie.parse(document.cookie);
   return cookies.token;
 };
+
+// axiosInstance.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if (error.response && error.response.status === 401) {
+//       console.error("Unauthorized");
+//       window.location.href = "/auth/signin";
+//       deleteToken();
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export default axiosInstance;

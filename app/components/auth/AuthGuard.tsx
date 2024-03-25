@@ -9,11 +9,15 @@ export const AuthGuard: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      router.push("/auth/signin");
-    } else {
-      setIsLoading(false);
-    }
+    const checkAuthentication = async () => {
+      if (!(await isAuthenticated())) {
+        router.push("/auth/signin");
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthentication();
   }, [router]);
 
   if (isLoading) {
@@ -34,11 +38,15 @@ export const RedirectionComponent: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (isAuthenticated()) {
-      router.push("/dashboard");
-    } else {
-      setIsLoading(false);
-    }
+    const checkAuthentication = async () => {
+      if (await isAuthenticated()) {
+        router.push("/dashboard");
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthentication();
   }, [router]);
 
   if (isLoading) {

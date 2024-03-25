@@ -14,15 +14,25 @@ const getToken = () => {
   return cookies.token;
 };
 
-const deleteToken = () => {
+export const deleteToken = () => {
   document.cookie = cookie.serialize("token", "", {
     maxAge: -1, // Expire the cookie
     path: "/",
   });
 };
 
-export const isAuthenticated = () => {
-  return !!getToken();
+export const isAuthenticated = async () => {
+  const token = getToken();
+  if (!token) {
+    return false;
+  }
+  try {
+    const response = await axiosInstance.get("/auth/profile/");
+    return response.status === 200;
+  } catch (error) {
+    deleteToken();
+    return false;
+  }
 };
 
 export const signIn = async (credentials: any) => {

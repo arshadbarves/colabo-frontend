@@ -21,7 +21,7 @@ export const getProject = async (projectId: string) => {
 
 export const createProject = async (project: any) => {
   try {
-    const response = await axiosInstance.post("api/projects", project);
+    const response = await axiosInstance.post("api/projects/", project);
     return response.data;
   } catch (error) {
     throw error;
