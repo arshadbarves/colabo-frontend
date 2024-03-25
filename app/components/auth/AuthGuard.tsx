@@ -14,7 +14,7 @@ export const AuthGuard: React.FC<{ children: React.ReactNode }> = ({
     } else {
       setIsLoading(false);
     }
-  }, []);
+  }, [router]);
 
   if (isLoading) {
     return (
@@ -39,7 +39,7 @@ export const RedirectionComponent: React.FC<{ children: React.ReactNode }> = ({
     } else {
       setIsLoading(false);
     }
-  }, []);
+  }, [router]);
 
   if (isLoading) {
     return (

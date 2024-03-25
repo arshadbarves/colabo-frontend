@@ -222,6 +222,8 @@ const Dashboard = () => {
                   <Image
                     className="h-8 w-8 rounded-full"
                     src="https://avatar.iran.liara.run/public"
+                    width={32}
+                    height={32}
                     alt=""
                   />
                 </Menu.Button>
@@ -331,6 +333,8 @@ const Dashboard = () => {
                           <Image
                             key={index}
                             src="https://avatar.iran.liara.run/public"
+                            width={32}
+                            height={32}
                             alt="Collaborator Avatar"
                             className="w-8 h-8 rounded-full object-cover dark:bg-gray-600"
                             style={{
