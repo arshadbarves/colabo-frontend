@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TButtonLink } from "./common/ui/TLink";
+import { TButtonLink } from "../common/ui/TLink";
 
 export const SocialSignInOptions: React.FC = () => {
   return (

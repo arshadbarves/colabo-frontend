@@ -37,14 +37,16 @@ const buttonConfig = {
 // Button
 export const TButton: React.FC<{
   text: string;
+  type?: "button" | "submit" | "reset";
   color?: keyof typeof buttonConfig;
   size?: keyof typeof buttonConfig;
   fullWidth?: boolean;
   outline?: boolean;
   icon?: React.ReactNode; // Accepts any JSX element as an icon
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }> = ({
   text,
+  type = "button",
   color = "primary",
   size = "medium",
   fullWidth = false,
@@ -71,6 +73,7 @@ export const TButton: React.FC<{
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`group relative transition-all duration-300 ease-in-out ${fullWidthClass} flex justify-center border text-sm font-medium rounded-xl ${sizeClass} ${buttonStyle}`}
     >

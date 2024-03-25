@@ -10,13 +10,12 @@ import {
   faClock,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { Logo } from "../components/utils/Logo";
-import { HomeLink } from "../components/common/ui/TLink";
-import { AuthGuard } from "../components/auth/AuthGuard";
-import { getProfile, signOut } from "../services/api/auth";
 import { useRouter } from "next/navigation";
-import { getProjects } from "../services/api/projects";
-import { formatDate } from "../utils/others";
+import { getProjects } from "@/app/services/api/projects";
+import { signOut } from "@/app/services/api/auth";
+import { AuthGuard } from "@/app/components/auth/AuthGuard";
+import { HomeLink } from "@/app/components/common/ui/TLink";
+import { Logo } from "@/app/components/utils/Logo";
 
 const user = {
   name: "Tom Cook",
@@ -43,32 +42,21 @@ const Dashboard = () => {
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [user, setUser] = useState<User>();
+  const [tasks, setTasks] = useState<Project[]>([]);
 
   useEffect(() => {
-    fetchUser();
+    const fetchProjects = async () => {
+      try {
+        const response = await getProjects();
+        const data = response.results;
+        setTasks(data);
+      } catch (error) {
+        console.error("Error fetching tasks", error);
+      }
+    };
+
     fetchProjects();
   }, []);
-
-  const fetchUser = async () => {
-    try {
-      const response = await getProfile();
-      const data = response;
-      setUser(data);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  };
-  const fetchProjects = async () => {
-    try {
-      const response = await getProjects();
-      const data = response.results;
-      setProjects(data);
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-    }
-  };
 
   const handleProjectCreate = () => {
     setIsDialogOpen(true);
@@ -128,7 +116,7 @@ const Dashboard = () => {
   };
 
   const handleProjectDelete = (id: number) => {
-    setProjects(projects.filter((project) => project.id !== id));
+    setTasks(tasks.filter((project) => project.id !== id));
   };
 
   // const handleProjectUpdate = (id: number, name: string) => {
@@ -182,8 +170,7 @@ const Dashboard = () => {
               <div className="rounded-lg border dark:border-gray-800 bg-card text-card-foreground shadow-sm dark:bg-gray-800/40 dark:text-gray-300 dark:hover:bg-gray-800/50 transition-colors">
                 <div className="p-6">
                   <button className="group relative w-full flex justify-center border text-sm font-medium rounded-xl text-base px-4 py-2 bg-primary hover:bg-primary-600 text-white">
-                    {/* user name */}
-                    <span>{user?.first_name + " " + user?.last_name}</span>
+                    Logout
                   </button>
                 </div>
               </div>
@@ -220,7 +207,7 @@ const Dashboard = () => {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src="https://avatar.iran.liara.run/public"
+                    src={user.imageUrl}
                     alt=""
                   />
                 </Menu.Button>
@@ -235,43 +222,33 @@ const Dashboard = () => {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-white p-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:text-gray-100 backdrop-filter backdrop-blur-lg">
-                  <div className="p-4 items-center gap-4 border-b dark:border-gray-500">
-                    <span className="block font-semibold">
-                      {user?.first_name + " " + user?.last_name}
-                    </span>
-                    <span className="block text-xs text-gray-500 dark:text-gray-400">
-                      {user?.email}
-                    </span>
-                  </div>
-                  <div className="p-2 border-b dark:border-gray-800">
-                    {userNavigation.map((item) => (
-                      <Menu.Item key={item.name}>
-                        {({ active }) => (
-                          <a
-                            href={item.href}
-                            className={classNames(
-                              active
-                                ? "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
-                                : "block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700",
-                              "text-decoration-none",
-                              "rounded-lg",
-                              "hover:bg-gray-200"
-                            )}
-                          >
-                            {item.name}
-                          </a>
-                        )}
-                      </Menu.Item>
-                    ))}
-                    <Menu.Item>
-                      <button
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 hover:text-gray-200 text-decoration-none rounded-lg hover:bg-gray-200"
-                        onClick={handleSignOut}
-                      >
-                        Sign out
-                      </button>
+                  {userNavigation.map((item) => (
+                    <Menu.Item key={item.name}>
+                      {({ active }) => (
+                        <a
+                          href={item.href}
+                          className={classNames(
+                            active
+                              ? "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                              : "block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700",
+                            "text-decoration-none",
+                            "rounded-lg",
+                            "hover:bg-gray-200"
+                          )}
+                        >
+                          {item.name}
+                        </a>
+                      )}
                     </Menu.Item>
-                  </div>
+                  ))}
+                  <Menu.Item>
+                    <button
+                      className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700 rounded-lg"
+                      onClick={handleSignOut}
+                    >
+                      Sign out
+                    </button>
+                  </Menu.Item>
                 </Menu.Items>
               </Transition>
             </Menu>
@@ -294,7 +271,7 @@ const Dashboard = () => {
             </div>
 
             <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {projects.map((project) => (
+              {tasks.map((project) => (
                 <div
                   key={project.id}
                   className="rounded-lg border bg-card text-card-foreground shadow-sm dark:border-gray-800 dark:bg-gray-800/40 dark:text-gray-300 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700/50"
@@ -319,7 +296,7 @@ const Dashboard = () => {
                           icon={faClock}
                           className="text-muted-foreground dark:text-gray-500"
                         />
-                        {formatDate(project.created_at)}
+                        {project.created_at}
                       </p>
                     </div>
                     <div className="h-2 mt-2"></div>
